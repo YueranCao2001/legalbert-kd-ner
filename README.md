@@ -701,7 +701,7 @@ python scripts/plot_kd_summary.py --results_dir results --output_dir outputs/fig
 ## 7.1 Teacher vs Best Student — F1 and Parameter Comparison
 
 ### **Figure 1 — Teacher vs KD Student F1**  
-`outputs/figures/f1_comparison.png`
+![F1 Score Comparison](outputs/figures/f1_comparison.png)
 
 This figure highlights the absolute performance gap between:
 
@@ -713,7 +713,7 @@ The student loses roughly **0.14 absolute F1**, but is **much smaller, faster, a
 ---
 
 ### **Figure 2 — Teacher vs KD Student Parameters**  
-`outputs/figures/param_comparison.png`
+![Parameter Comparison](outputs/figures/param_comparison.png)
 
 Parameter comparison:
 
@@ -727,7 +727,7 @@ This represents a **≈39% reduction in parameters**, while retaining most of th
 ## 7.2 F1 per Parameter — Efficiency View
 
 ### **Figure 3 — Efficiency: F1 per Parameter**  
-`outputs/figures/kd_f1_per_param_bar.png`
+![F1 per Parameter Bar Chart](outputs/figures/kd_f1_per_param_bar.png)
 
 Each bar shows:  
 **Test F1 / parameter count (per million parameters)**  
@@ -746,7 +746,7 @@ Each bar shows:
 ## 7.3 Accuracy–Size Trade-off
 
 ### **Figure 4 — Parameters vs Test F1**  
-`outputs/figures/kd_param_f1_tradeoff.png`
+![Parameter–F1 Trade-off](outputs/figures/kd_param_f1_tradeoff.png)
 
 Each point represents a different model:
 
@@ -759,7 +759,7 @@ Each point represents a different model:
 ## 7.4 Progressive KD Improvements
 
 ### **Figure 5 — KD Progression Curve**  
-`outputs/figures/kd_progression_line.png`
+![KD Progression Over Stages](outputs/figures/kd_progression_line.png)
 
 This plot tracks improvements across KD versions:
 
@@ -779,7 +779,7 @@ Each step provides incremental improvement, but the **largest gain** comes from 
 ## 7.5 Relative Performance vs Teacher
 
 ### **Figure 6 — Relative F1 (% of Teacher)**  
-`outputs/figures/kd_relative_f1_bar.png`
+![Relative F1 Improvement](outputs/figures/kd_relative_f1_bar.png)
 
 - **KD-v3 Stage2 recovers ≈81.5% of the teacher F1**
 - Other students recover **≈65–68%**
@@ -792,7 +792,7 @@ This clearly shows that **multi-stage KD contributes more than adding extra teac
 ## 7.6 Overall Test F1 Comparison
 
 ### **Figure 7 — Test F1 Bar Chart**  
-`outputs/figures/kd_test_f1_bar.png`
+![Test Set F1 Scores](outputs/figures/kd_test_f1_bar.png)
 
 This is the clean summary bar chart showing **absolute Test F1 scores** for:
 
