@@ -62,9 +62,10 @@ flowchart LR
 
     %% Notes
     N --> O["Stage1: KD-only + masking<br/>Stage2: initialize from Stage1 + full loss"]
-
+```
 
 ---
+
 
 # Table of Contents
 
@@ -107,7 +108,7 @@ flowchart LR
 
 ## 1. Project Structure
 
-```text
+```
 legalbert-kd-ner/
 ├── configs/                  # Optional config files
 ├── data/
@@ -141,36 +142,40 @@ legalbert-kd-ner/
 │       └── student_kd_multiteacher_module.py
 ├── requirements.txt
 └── README.md
+```
 
 ## 2. Environment Setup
 
 ### 2.1 Create environment
 
-```bash
+```
 conda create -n legalbert_kd python=3.10 -y
 conda activate legalbert_kd
+```
 
 ### 2.2 Install PyTorch
 
 GPU example (CUDA 12.1):
 
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+```pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121```
 
 CPU version:
 
-pip install torch torchvision torchaudio
+```pip install torch torchvision torchaudio```
 
 ### 2.3 Install remaining dependencies
 
+```
 pip install "transformers>=4.44.0" "datasets>=2.20.0" "accelerate>=0.33.0"
 pip install "pytorch-lightning>=2.4.0"
 pip install "seqeval>=1.2.2" "scikit-learn>=1.3.0"
 pip install "matplotlib>=3.8.0" "pandas>=2.0.0"
 pip install "tqdm>=4.66.0" "pyyaml>=6.0.0" "rich>=13.7.0"
+```
 
 Or simply:
 
-pip install -r requirements.txt
+```pip install -r requirements.txt```
 
 ## 3. Dataset & Preprocessing
 
@@ -178,26 +183,30 @@ pip install -r requirements.txt
 
 This project expects data in CoNLL-style format:
 
+```
 TOKEN   TAG
 ...
 India   I-PRECEDENT
 ,       O
+```
 
 Directory layout:
 
+```
 data/raw/inlegalner/
   ├── train.conll
   ├── dev.conll
   └── test.conll
+```
 
 ### 3.2 Dataset Implementation
 
 The dataset loading and preprocessing pipeline is implemented in:
 
+```
 src/data/inlegalner_dataset.py
-
 src/data/datamodule_legalner.py
-
+```
 
 #### **`inlegalner_dataset.py`**
 
@@ -243,7 +252,7 @@ This avoids issues when dynamically padding sequences of variable length and ens
 
 After setting up the environment and placing the data under `data/raw/inlegalner/`, you can quickly verify that the dataloader works:
 
-```python
+```
 from src.data.datamodule_legalner import LegalNERDataModule
 
 dm = LegalNERDataModule(
@@ -256,6 +265,7 @@ dm.setup("fit")
 batch = next(iter(dm.train_dataloader()))
 print(batch["input_ids"].shape)   # e.g. (4, 256)
 print(batch["labels"].shape)
+```
 
 If this runs without errors and prints reasonable tensor shapes, the dataset + tokenizer pipeline is correctly configured.
 
@@ -263,17 +273,19 @@ If this runs without errors and prints reasonable tensor shapes, the dataset + t
 
 The project uses the InLegalNER dataset hosted on HuggingFace:
 
-- Dataset: opennyaiorg/InLegalNER
+- Dataset: ```opennyaiorg/InLegalNER```
 
 After you accept access to the dataset on HuggingFace, run:
 
-python scripts/download_inlegalner.py
+```python scripts/download_inlegalner.py```
 
 This script will create:
 
+```
 data/raw/inlegalner/train.conll
 data/raw/inlegalner/dev.conll
 data/raw/inlegalner/test.conll
+```
 
 These files are then consumed by the dataset and datamodule classes described above.
 
@@ -302,13 +314,14 @@ The module is designed to be **plug-and-play** for other BERT-style encoders if 
 
 Example command:
 
-```bash
+```
 python scripts/train_teacher.py \
   --data_dir data/raw/inlegalner \
   --output_dir outputs/checkpoints/teacher_legalbert \
   --batch_size 16 \
   --max_epochs 5 \
   --pretrained_model_name ggomarr/legal-bert-base-uncased-safetensors
+```
 
 After training, the script:
 
@@ -320,6 +333,7 @@ After training, the script:
 
 Example JSON:
 
+```
 {
   "experiment": "teacher_legalbert",
   "batch_size": 16,
@@ -330,6 +344,7 @@ Example JSON:
     "test_f1": 0.7807
   }
 }
+```
 
 ## 5. Knowledge-Distilled Student Model (Single-Teacher)
 
@@ -382,7 +397,7 @@ where:
 
 Typical command (using the trained LegalBERT teacher checkpoint):
 
-```bash
+```
 python scripts/train_student_kd.py \
   --data_dir data/raw/inlegalner \
   --teacher_model_name ggomarr/legal-bert-base-uncased-safetensors \
@@ -395,6 +410,7 @@ python scripts/train_student_kd.py \
   --alpha_kd 1.0 \
   --temperature 2.0 \
   --precision 16-mixed
+```
 
 After training, the script runs:
 
@@ -402,10 +418,10 @@ After training, the script runs:
 
 and writes metrics to:
 
-results/student_kd_distilbert_inlegalner_test.json
+```results/student_kd_distilbert_inlegalner_test.json```
 
 This JSON file can be directly compared with the teacher metrics JSON
-(e.g., results/teacher_legalbert_inlegalner_test.json).
+(e.g., ```results/teacher_legalbert_inlegalner_test.json```).
 
 ## 6. Experimental Results (InLegalNER)
 
@@ -521,7 +537,7 @@ Intermediate supervision from hidden states helps the compressed model learn mor
 
 **Training command**
 
-```bash
+```
 python scripts/train_student_kd_v2.py \
   --data_dir data/raw/inlegalner \
   --teacher_model_name ggomarr/legal-bert-base-uncased-safetensors \
@@ -540,10 +556,13 @@ python scripts/train_student_kd_v2.py \
   --alpha_inter 1.0 \
   --temperature 2.0 \
   --precision 16-mixed
+```
 
 One-line version:
 
+```
 python scripts/train_student_kd_v2.py --data_dir data/raw/inlegalner --teacher_model_name ggomarr/legal-bert-base-uncased-safetensors --teacher_ckpt outputs/checkpoints/teacher_legalbert/teacher-legalbert-epoch=02-val_f1=0.8061.ckpt --student_model_name distilbert-base-uncased --output_dir outputs/checkpoints/student_kd_v2_distilbert_inter --batch_size 16 --max_length 256 --max_epochs 5 --num_workers 0 --learning_rate 5e-5 --weight_decay 0.01 --warmup_ratio 0.1 --alpha_ce 1.0 --alpha_kd 1.0 --alpha_inter 1.0 --temperature 2.0 --precision 16-mixed
+```
 
 ### 6.4 KD-v3 Stage1 — Unsupervised KD with Masking Augmentation
 
@@ -601,7 +620,7 @@ KD-v3 Stage2 is the **full distillation pipeline**, combining supervised CE with
 
 **Training command**
 
-```bash
+```
 python scripts/train_student_kd_v3.py \
   --data_dir data/raw/inlegalner \
   --teacher_model_name ggomarr/legal-bert-base-uncased-safetensors \
@@ -622,10 +641,13 @@ python scripts/train_student_kd_v3.py \
   --alpha_inter 1.0 \
   --alpha_soft 1.0 \
   --precision 16-mixed
+```
 
 One-line version:
 
+```
 python scripts/train_student_kd_v3.py --data_dir data/raw/inlegalner --teacher_model_name ggomarr/legal-bert-base-uncased-safetensors --teacher_ckpt outputs/checkpoints/teacher_legalbert/teacher-legalbert-epoch=02-val_f1=0.8061.ckpt --student_model_name distilbert-base-uncased --student_init_ckpt outputs/checkpoints/student_kd_v3_stage1/student-kd-stage1-v3-epoch=04-val_f1=0.5358.ckpt --output_dir outputs/checkpoints/student_kd_v3_stage2 --batch_size 16 --max_length 256 --max_epochs 5 --num_workers 0 --learning_rate 5e-5 --weight_decay 0.01 --warmup_ratio 0.1 --temperature 2.0 --alpha_ce 1.0 --alpha_kd 1.0 --alpha_inter 1.0 --alpha_soft 1.0 --precision 16-mixed
+```
 
 ### 6.6 Multi-Teacher KD — Distilling from Two LegalBERT Teachers
 
@@ -670,9 +692,10 @@ Multi-teacher KD stabilizes supervision but does **not** surpass KD-v3 Stage2 �
 
 All figures below can be generated with:
 
-```bash
+```
 python scripts/analyze_kd_results.py
 python scripts/plot_kd_summary.py --results_dir results --output_dir outputs/figures
+```
 
 (If your file locations differ, adjust the paths in the script and the image links.)
 
@@ -810,27 +833,27 @@ This project demonstrates that **knowledge distillation is an effective way to c
 
 Several extensions can further improve model compactness and performance:
 
-### **1. Smaller Students**
+### **(1). Smaller Students**
 - Distill into even lighter models such as:
   - **4-layer DistilBERT**
   - **TinyBERT**
   - **MiniLM**
 - Explore architectures optimized for KD from the start.
 
-### **2. Advanced Intermediate-Layer Objectives**
+### **(2). Advanced Intermediate-Layer Objectives**
 Incorporate richer structural KD signals:
 - **Attention transfer**
 - **Relation distillation**
 - **Contrastive KD** for better discriminative representations
 
-### **3. Richer Data Augmentation**
+### **(3). Richer Data Augmentation**
 Beyond masking, explore:
 - **Back-translation**
 - **Paraphrasing of legal sentences**
 - **Synonym replacement**
 - **Entity replacement augmentation**
 
-### **4. Hyperparameter Sweeps**
+### **(4). Hyperparameter Sweeps**
 Tune the KD configuration more extensively:
 - α<sub>CE</sub>
 - α<sub>KD</sub>
@@ -839,7 +862,7 @@ Tune the KD configuration more extensively:
 
 This can reveal better trade-offs between CE and KD signals.
 
-### **5. Combine KD with Model Compression**
+### **(5). Combine KD with Model Compression**
 More aggressive compression is possible by adding:
 - **Quantization** (INT8 or INT4)
 - **Pruning** (structured or unstructured)
@@ -847,7 +870,7 @@ More aggressive compression is possible by adding:
 
 These can yield further speed-ups for deployment.
 
-### **6. Stronger Multi-Teacher KD**
+### **(6). Stronger Multi-Teacher KD**
 Multi-teacher KD showed stability but not higher accuracy in the current setup.  
 Future work could explore:
 
