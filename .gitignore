@@ -16,25 +16,25 @@ env/
 venv/
 
 # ------------------------
-# Do NOT ignore scripts, images, small results
-# Instead only ignore large training data & checkpoints
+# Large raw data (ignore contents but keep folder)
 # ------------------------
+data/raw/*
+!data/raw/.gitkeep
 
-# Raw dataset (large)
-data/raw/
-data/processed/
+data/processed/*
+!data/processed/.gitkeep
 
-# Checkpoints (large)
-outputs/checkpoints/
+# ------------------------
+# Large checkpoints (ignore contents but keep folder)
+# ------------------------
+outputs/checkpoints/*
+!outputs/checkpoints/.gitkeep
 
-# Metrics are small → KEEP
-# outputs/metrics/  ← removed from ignore
-
-# Figures are small → KEEP
-# outputs/figures/  ← removed from ignore
-
-# Logs: usually small, but optional
-logs/
+# ------------------------
+# Logs (ignore content but keep folder)
+# ------------------------
+logs/*
+!logs/.gitkeep
 
 # ------------------------
 # Jupyter
