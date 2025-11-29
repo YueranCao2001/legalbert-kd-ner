@@ -29,25 +29,25 @@ The repository implements the **full pipeline**: dataset processing, teacher tra
 flowchart LR
 
 %% Input & tokenizer
-A["Input legal sentence: The Supreme Court of India ..."] --> B["Tokenizer (WordPiece/BPE)"]
+A["Input legal sentence:<br/>`The Supreme Court of India ...`"] --> B["Tokenizer<br/>(WordPiece/BPE)"]
 B --> C["Token embeddings"]
 
 %% Teacher path
-C --> D["Teacher encoder: LegalBERT (12 layers)"]
+C --> D["Teacher encoder<br/>LegalBERT (12 layers)"]
 D --> E["Teacher NER head"]
-E --> F["Teacher logits (t)"]
+E --> F["Teacher logits **t**"]
 
 %% Student path
-C --> G["Student encoder: 6-layer DistilBERT"]
+C --> G["Student encoder<br/>6-layer DistilBERT-style"]
 G --> H["Student NER head"]
-H --> I["Student logits (s)"]
+H --> I["Student logits **s**"]
 
 %% Intermediate KD
-D --> J["Intermediate KD: match selected layers"]
+D --> J["Intermediate KD<br/>match selected layers"]
 G --> J
 
 %% Logit KD
-F --> K["Logit KD: KL( softmax(s/T) || softmax(t/T) )"]
+F --> K["Logit KD<br/>KL( softmax(s/T) || softmax(t/T) )"]
 I --> K
 
 %% CE loss
@@ -55,12 +55,12 @@ L["Gold NER labels"] --> M["Cross-entropy loss"]
 I --> M
 
 %% Total loss
-K --> N["Total objective: L = aCE*LCE + aKD*LKD + aInter*LInter"]
+K --> N["Total objective:<br/>L = αCE·LCE + αKD·LKD + αinter·Linter"]
 J --> N
 M --> N
 
 %% Notes
-N --> O["Stage1: KD-only with masking. Stage2: initialize from Stage1 and train full loss."]
+N --> O["Stage1: KD-only + masking<br/>Stage2: initialize from Stage1 + full loss"]
 ```
 
 ---
