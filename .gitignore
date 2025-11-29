@@ -1,0 +1,53 @@
+# ------------------------
+# Python cache / temp
+# ------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# ------------------------
+# virtual env
+# ------------------------
+.env/
+.venv/
+env/
+venv/
+
+# ------------------------
+# Do NOT ignore scripts, images, small results
+# Instead only ignore large training data & checkpoints
+# ------------------------
+
+# Raw dataset (large)
+data/raw/
+data/processed/
+
+# Checkpoints (large)
+outputs/checkpoints/
+
+# Metrics are small → KEEP
+# outputs/metrics/  ← removed from ignore
+
+# Figures are small → KEEP
+# outputs/figures/  ← removed from ignore
+
+# Logs: usually small, but optional
+logs/
+
+# ------------------------
+# Jupyter
+# ------------------------
+.ipynb_checkpoints/
+
+# ------------------------
+# VSCode
+# ------------------------
+.vscode/
+
+# ------------------------
+# OS
+# ------------------------
+.DS_Store
+Thumbs.db

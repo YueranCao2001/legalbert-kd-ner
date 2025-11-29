@@ -1,0 +1,15 @@
+{
+  "experiment": "teacher_legalbert",
+  "data_dir": "data/raw/inlegalner",
+  "pretrained_model_name": "ggomarr/legal-bert-base-uncased-safetensors",
+  "batch_size": 16,
+  "max_length": 256,
+  "max_epochs": 5,
+  "learning_rate": 5e-05,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "test_metrics": {
+    "test_loss": 0.14630235731601715,
+    "test_f1": 0.7806953191757202
+  }
+}

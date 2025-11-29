@@ -1,0 +1,21 @@
+{
+  "experiment": "student_kd_v2_distilbert_inter",
+  "data_dir": "data/raw/inlegalner",
+  "teacher_model_name": "ggomarr/legal-bert-base-uncased-safetensors",
+  "teacher_ckpt": "outputs/checkpoints/teacher_legalbert/teacher-legalbert-epoch=02-val_f1=0.8061.ckpt",
+  "student_model_name": "distilbert-base-uncased",
+  "batch_size": 16,
+  "max_length": 256,
+  "max_epochs": 5,
+  "learning_rate": 5e-05,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "temperature": 2.0,
+  "alpha_ce": 1.0,
+  "alpha_kd": 1.0,
+  "alpha_inter": 1.0,
+  "test_metrics": {
+    "test_loss": 97.07930755615234,
+    "test_f1": 0.5222159624099731
+  }
+}

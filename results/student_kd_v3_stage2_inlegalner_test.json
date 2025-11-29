@@ -1,0 +1,24 @@
+{
+  "experiment": "student_kd_v3_stage2",
+  "stage": "stage2_supervised_kd",
+  "data_dir": "data/raw/inlegalner",
+  "teacher_model_name": "ggomarr/legal-bert-base-uncased-safetensors",
+  "teacher_ckpt": "outputs/checkpoints/teacher_legalbert/teacher-legalbert-epoch=02-val_f1=0.8061.ckpt",
+  "student_model_name": "distilbert-base-uncased",
+  "student_init_ckpt": "outputs/checkpoints/student_kd_v3_stage1/student-kd-stage1-v3-epoch=04-val_f1=0.5358.ckpt",
+  "batch_size": 16,
+  "max_length": 256,
+  "max_epochs": 5,
+  "learning_rate": 5e-05,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "temperature": 2.0,
+  "alpha_ce": 1.0,
+  "alpha_kd": 1.0,
+  "alpha_inter": 1.0,
+  "alpha_soft": 1.0,
+  "test_metrics": {
+    "test_loss": 80.41030883789062,
+    "test_f1": 0.6361137628555298
+  }
+}
