@@ -360,18 +360,20 @@ Key components:
 
 The loss combines supervised CE and logit-based KD:
 
+```latex
 \[
 \mathcal{L}
 =
-\alpha_{\text{CE}} \cdot \mathcal{L}_{\text{CE}}(\text{student}, y)
+\alpha_{\mathrm{CE}} \cdot \mathcal{L}_{\mathrm{CE}}(\text{student}, y)
 +
-\alpha_{\text{KD}} \cdot T^2 \cdot
+\alpha_{\mathrm{KD}} \cdot T^{2} \cdot
 \mathrm{KL}\!\left(
-\operatorname{softmax}(s/T)
-\;\big\|\;
-\operatorname{softmax}(t/T)
-\right),
+  \operatorname{softmax}\!\left(\frac{s}{T}\right)
+  \;\big\|\;
+  \operatorname{softmax}\!\left(\frac{t}{T}\right)
+\right)
 \]
+```
 
 where:
 
@@ -464,16 +466,18 @@ Metrics are stored for reproducibility in:
 
 The simplest form of KD minimizes:
 
+```latex
 \[
-\mathcal{L}_{\text{KD}}
+\mathcal{L}_{\mathrm{KD}}
 =
-T^2 \cdot
+T^{2} \cdot
 \mathrm{KL}\!\left(
-\operatorname{softmax}(s/T)
-\,\big\|\,
-\operatorname{softmax}(t/T)
-\right),
+  \operatorname{softmax}\!\left(\frac{s}{T}\right)
+  \,\big\|\,
+  \operatorname{softmax}\!\left(\frac{t}{T}\right)
+\right)
 \]
+```
 
 where:
 
@@ -507,26 +511,30 @@ We extend KD with **hidden-state alignment**:
 
 Intermediate loss:
 
+```latex
 \[
-\mathcal{L}_{\text{inter}}
+\mathcal{L}_{\mathrm{inter}}
 =
-\frac{1}{6}\sum_i
+\frac{1}{6} \sum_{i}
 \left\|
-h^s_i - h^t_i
-\right\|_2^2,
+  h^{s}_{i} - h^{t}_{i}
+\right\|_{2}^{2}
 \]
+```
 
 Total loss:
 
+```latex
 \[
 \mathcal{L}
 =
-\alpha_{\text{CE}} \mathcal{L}_{\text{CE}}
+\alpha_{\mathrm{CE}} \, \mathcal{L}_{\mathrm{CE}}
 +
-\alpha_{\text{KD}} \mathcal{L}_{\text{KD}}
+\alpha_{\mathrm{KD}} \, \mathcal{L}_{\mathrm{KD}}
 +
-\alpha_{\text{inter}} \mathcal{L}_{\text{inter}}.
+\alpha_{\mathrm{inter}} \, \mathcal{L}_{\mathrm{inter}}
 \]
+```
 
 **Result:**  
 - **0.5222** test F1 (**66.9%** of teacher)  
@@ -602,13 +610,15 @@ KD-v3 Stage2 is the **full distillation pipeline**, combining supervised CE with
 
 **Stage2 loss**
 
+```latex
 \[
-\mathcal{L}_{\text{stage2}}
+\mathcal{L}_{\mathrm{stage2}}
 =
-\alpha_{\text{CE}} \mathcal{L}_{\text{CE}}
-+ \alpha_{\text{KD}} \mathcal{L}_{\text{KD}}
-+ \alpha_{\text{inter}} \mathcal{L}_{\text{inter}}.
+\alpha_{\mathrm{CE}} \, \mathcal{L}_{\mathrm{CE}}
++ \alpha_{\mathrm{KD}} \, \mathcal{L}_{\mathrm{KD}}
++ \alpha_{\mathrm{inter}} \, \mathcal{L}_{\mathrm{inter}}
 \]
+```
 
 **Result**
 
