@@ -1,5 +1,16 @@
 # Compressing LegalBERT via Knowledge Distillation for Legal NER
 
+
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-lightning-orange.svg)](https://pytorch-lightning.readthedocs.io/)
+![Task](https://img.shields.io/badge/task-legal%20NER-6f42c1.svg)
+![Model](https://img.shields.io/badge/model-LegalBERT%20%E2%86%92%20DistilBERT-success.svg)
+![Status](https://img.shields.io/badge/status-course%20project-informational.svg)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
+> **TL;DR.** This repo implements a knowledge-distillation pipeline that compresses a 12-layer LegalBERT NER model into a 6-layer DistilBERT-style student on the **InLegalNER** dataset.  
+> The best student recovers **≈81.5%** of teacher F1 with **39% fewer parameters**.
+
 This repository contains the code and experiments for the course project:
 
 > **Compressing LegalBERT via Knowledge Distillation for Legal NER**
@@ -103,6 +114,7 @@ N --> O["Stage1: KD-only + masking<br/>Stage2: initialize from Stage1 + full los
   - [Key Findings](#key-findings)
   - [Recommended Model for Deployment](#recommended-model-for-deployment)
   - [Future Directions](#future-directions)
+- [9. Citation](#9-citation)
 
 
 ## 1. Project Structure
@@ -893,4 +905,15 @@ This may allow multi-teacher KD to surpass the best single-teacher pipeline.
 
 **Overall, this project provides a strong and extensible KD pipeline for LegalBERT NER, and KD-v3 Stage2 serves as a reliable, efficient student model suitable for real-world deployment.**
 
+## 9. Citation
 
+If you find this repository useful, please cite the corresponding course report:
+
+```bibtex
+@misc{cao2025legalbertkd,
+  author       = {Yueran Cao},
+  title        = {Compressing LegalBERT via Knowledge Distillation for Legal Named Entity Recognition},
+  note         = {COSC-5990 Course Project, Georgetown University},
+  year         = {2025}
+}
+```
