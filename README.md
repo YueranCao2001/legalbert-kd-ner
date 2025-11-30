@@ -8,7 +8,7 @@
 ![Status](https://img.shields.io/badge/status-course%20project-informational.svg)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-> **TL;DR.** This repo implements a knowledge-distillation pipeline that compresses a 12-layer LegalBERT NER model into a 6-layer DistilBERT-style student on the **InLegalNER** dataset.  
+> **TL;DR:** This repo implements a knowledge-distillation pipeline that compresses a 12-layer LegalBERT NER model into a 6-layer DistilBERT-style student on the **InLegalNER** dataset.  
 > The best student recovers **≈81.5%** of teacher F1 with **39% fewer parameters**.
 
 This repository contains the code and experiments for the course project:
